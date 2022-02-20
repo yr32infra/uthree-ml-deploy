@@ -130,7 +130,6 @@ volumes:
 networks:
   prometheus__cloudflared:
     name: prometheus__cloudflared
-    internal: true
     external: true
 
   jupyternotebook_nginx:
