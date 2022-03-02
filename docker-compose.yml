@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   jupyternotebook:
-    image: ghcr.io/yanorei32/uthree-ml-image:latest@sha256:a8e8ef3365784cba6df2c9f2981e48cff83459bbce3311669f254079eb28492a
+    image: ghcr.io/yanorei32/uthree-ml-image:latest@sha256:e31a43afd305e2f95faf7b068a8c9f46dd5054bfc400a57c7d5be9960a08ce04
     hostname: jupyternotebook
     container_name: uthreeml__jupyternotebook
 
