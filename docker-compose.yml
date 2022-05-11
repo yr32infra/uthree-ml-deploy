@@ -81,7 +81,7 @@ services:
         max-size: 1m
 
   cloudflared:
-    image: cloudflare/cloudflared:2022.4.1
+    image: cloudflare/cloudflared:2022.5.1
     hostname: cloudflared
     container_name: uthreeml__cloudflared
 
