@@ -37,7 +37,7 @@ services:
         max-size: 1m
 
   nginx:
-    image: nginx:1.23.0
+    image: nginx:1.23.1
     hostname: nginx
     container_name: uthreeml__nginx
 
