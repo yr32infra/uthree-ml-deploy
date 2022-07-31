@@ -9,6 +9,9 @@ services:
 
     init: true
 
+    environment:
+      SHELL: "/bin/zsh"
+
     volumes:
       - type: volume
         source: workdir
