@@ -4,9 +4,7 @@ services:
     image: ghcr.io/yanorei32/uthree-ml-image:latest@sha256:afedf064e6f719269b6bb6c0df143215ff22c69022cb86b68996e75bce0dbc7f
     hostname: jupyternotebook
     container_name: uthreeml__jupyternotebook
-
     restart: unless-stopped
-
     init: true
 
     environment:
@@ -16,9 +14,6 @@ services:
       - type: volume
         source: workdir
         target: /root
-
-    expose:
-      - 8080
 
     networks:
       - jupyternotebook_nginx
@@ -33,12 +28,6 @@ services:
             - driver: nvidia
               capabilities: [gpu]
 
-    logging:
-      driver: json-file
-      options:
-        max-file: '1'
-        max-size: 1m
-
   nginx:
     image: nginx:1.23.1
     hostname: nginx
@@ -48,9 +37,6 @@ services:
       HTPASSWD: ${HTPASSWD}
 
     restart: unless-stopped
-
-    depends_on:
-      - jupyternotebook
 
     volumes:
       - type: bind
@@ -69,19 +55,10 @@ services:
       - nginx_cloudflared
       - jupyternotebook_nginx
 
-    expose:
-      - 80
-
     deploy:
       resources:
         limits:
           memory: 256m
-
-    logging:
-      driver: json-file
-      options:
-        max-file: '1'
-        max-size: 1m
 
   cloudflared:
     image: cloudflare/cloudflared:2022.7.1
@@ -96,9 +73,6 @@ services:
 
     command: tunnel
     user: root
-
-    depends_on:
-      - nginx
 
     restart: unless-stopped
 
@@ -119,12 +93,6 @@ services:
       resources:
         limits:
           memory: 128m
-
-    logging:
-      driver: json-file
-      options:
-        max-file: '1'
-        max-size: 1m
 
 volumes:
   workdir:
