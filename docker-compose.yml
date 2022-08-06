@@ -68,7 +68,7 @@ services:
     environment:
       TUNNEL_METRICS: 0.0.0.0:9126
       TUNNEL_URL: http://nginx:80
-      TUNNEL_HOSTNAME: jupyter.yr32.net
+      TUNNEL_HOSTNAME: uthreeml.yr32.net
       TUNNEL_LOGFILE: /dev/stdout
 
     command: tunnel
@@ -88,6 +88,60 @@ services:
       prometheus__cloudflared:
         aliases:
           - uthreeml__cloudflared
+
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+
+  nginxcompat:
+    image: nginx:1.23.1
+    hostname: nginxcompat
+    container_name: uthreeml__nginxcompat
+    restart: unless-stopped
+
+    volumes:
+      - type: bind
+        source: ./nginx.compat.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+
+    networks:
+      - nginxcompat_cloudflaredcompat
+
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+  cloudflaredcompat:
+    image: cloudflare/cloudflared:2022.7.1
+    hostname: cloudflaredcompat
+    container_name: uthreeml__cloudflaredcompat
+    restart: unless-stopped
+
+    environment:
+      TUNNEL_METRICS: 0.0.0.0:9126
+      TUNNEL_URL: http://nginxcompat:80
+      TUNNEL_HOSTNAME: jupyter.yr32.net
+      TUNNEL_LOGFILE: /dev/stdout
+
+    command: tunnel
+    user: root
+
+
+    volumes:
+      - type: bind
+        source: /etc/cloudflared/cert.pem
+        target: /etc/cloudflared/cert.pem
+        read_only: true
+
+    networks:
+      nginxcompat_cloudflaredcompat:
+      cloudflaredcompat_internet:
+      prometheus__cloudflared:
+        aliases:
+          - uthreeml__cloudflaredcompat
 
     deploy:
       resources:
@@ -117,3 +171,9 @@ networks:
   cloudflared_internet:
     name: uthreeml__cloudflared_internet
 
+  nginxcompat_cloudflaredcompat:
+    name: uthreeml__nginxcompat_cloudflaredcompat
+    internal: true
+
+  cloudflaredcompat_internet:
+    name: uthreeml__cloudflaredcompat_internet
