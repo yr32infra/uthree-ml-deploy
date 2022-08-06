@@ -129,7 +129,6 @@ services:
     command: tunnel
     user: root
 
-
     volumes:
       - type: bind
         source: /etc/cloudflared/cert.pem
