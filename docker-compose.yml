@@ -15,7 +15,7 @@ services:
     volumes:
       - type: volume
         source: workdir
-        target: /work
+        target: /root
 
     expose:
       - 8080
