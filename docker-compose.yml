@@ -58,7 +58,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256m
+          memory: 128m
 
   cloudflared:
     image: cloudflare/cloudflared:2022.7.1
@@ -112,7 +112,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256m
+          memory: 128m
 
   cloudflaredcompat:
     image: cloudflare/cloudflared:2022.7.1
