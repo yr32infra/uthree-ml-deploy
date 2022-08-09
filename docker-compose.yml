@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   jupyternotebook:
-    image: ghcr.io/yanorei32/uthree-ml-image:latest@sha256:afedf064e6f719269b6bb6c0df143215ff22c69022cb86b68996e75bce0dbc7f
+    image: ghcr.io/yanorei32/uthree-ml-image:latest@sha256:5d058ff502dff67a3904a37113c444b2bd966591edaceb9ac0047c781799f5dc
     hostname: jupyternotebook
     container_name: uthreeml__jupyternotebook
     restart: unless-stopped
