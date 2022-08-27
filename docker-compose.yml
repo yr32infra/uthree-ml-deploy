@@ -35,7 +35,7 @@ services:
     environment:
       TUNNEL_METRICS: 0.0.0.0:9126
       TUNNEL_URL: http://jupyternotebook:8080
-      TUNNEL_HOSTNAME: uthreeml-testing.yr32.net
+      TUNNEL_HOSTNAME: uthreeml.yr32.net
       TUNNEL_LOGFILE: /dev/stdout
 
     command: tunnel
