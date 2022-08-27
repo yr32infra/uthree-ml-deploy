@@ -1,4 +1,3 @@
 docker-compose.yml
-nginx.conf
 nginx.compat.conf
 command.sh
