@@ -27,28 +27,6 @@ services:
             - driver: nvidia
               capabilities: [gpu]
 
-  cloudflared:
-    image: cloudflare/cloudflared:2022.8.0
-    hostname: cloudflared
-    container_name: uthreeml__cloudflared
-
-    environment:
-      TUNNEL_METRICS: 0.0.0.0:9126
-      TUNNEL_LOGFILE: /dev/stdout
-
-    command: tunnel run --token ${TUNNEL_TOKEN}
-    user: root
-
-    restart: unless-stopped
-
-    networks:
-      - default
-
-    deploy:
-      resources:
-        limits:
-          memory: 128m
-
   nginxcompat:
     image: nginx:1.23.1
     hostname: nginxcompat
@@ -62,17 +40,17 @@ services:
         read_only: true
 
     networks:
-      - nginxcompat_cloudflaredcompat
+      - default
 
     deploy:
       resources:
         limits:
           memory: 128m
 
-  cloudflaredcompat:
+  cloudflared:
     image: cloudflare/cloudflared:2022.8.0
-    hostname: cloudflaredcompat
-    container_name: uthreeml__cloudflaredcompat
+    hostname: cloudflared
+    container_name: uthreeml__cloudflared
     restart: unless-stopped
 
     environment:
@@ -83,11 +61,10 @@ services:
     user: root
 
     networks:
-      nginxcompat_cloudflaredcompat:
-      cloudflaredcompat_internet:
+      default:
       prometheus__cloudflared:
         aliases:
-          - uthreeml__cloudflaredcompat
+          - uthreeml__cloudflared
 
     deploy:
       resources:
@@ -105,10 +82,3 @@ networks:
 
   default:
     name: uthreeml__default
-
-  nginxcompat_cloudflaredcompat:
-    name: uthreeml__nginxcompat_cloudflaredcompat
-    internal: true
-
-  cloudflaredcompat_internet:
-    name: uthreeml__cloudflaredcompat_internet
