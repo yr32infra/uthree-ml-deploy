@@ -16,8 +16,7 @@ services:
         target: /root
 
     networks:
-      - jupyternotebook_nginx
-      - jupyternotebook_internet
+      - default
 
     deploy:
       resources:
@@ -28,38 +27,6 @@ services:
             - driver: nvidia
               capabilities: [gpu]
 
-  nginx:
-    image: nginx:1.23.1
-    hostname: nginx
-    container_name: uthreeml__nginx
-
-    environment:
-      HTPASSWD: ${HTPASSWD}
-
-    restart: unless-stopped
-
-    volumes:
-      - type: bind
-        source: ./nginx.conf
-        target: /etc/nginx/nginx.conf
-        read_only: true
-
-      - type: bind
-        source: ./command.sh
-        target: /command.sh
-        read_only: true
-
-    command: /command.sh
-
-    networks:
-      - nginx_cloudflared
-      - jupyternotebook_nginx
-
-    deploy:
-      resources:
-        limits:
-          memory: 128m
-
   cloudflared:
     image: cloudflare/cloudflared:2022.8.0
     hostname: cloudflared
@@ -67,8 +34,8 @@ services:
 
     environment:
       TUNNEL_METRICS: 0.0.0.0:9126
-      TUNNEL_URL: http://nginx:80
-      TUNNEL_HOSTNAME: uthreeml.yr32.net
+      TUNNEL_URL: http://jupyternotebook:8080
+      TUNNEL_HOSTNAME: uthreeml-testing.yr32.net
       TUNNEL_LOGFILE: /dev/stdout
 
     command: tunnel
@@ -83,11 +50,7 @@ services:
         read_only: true
 
     networks:
-      nginx_cloudflared:
-      cloudflared_internet:
-      prometheus__cloudflared:
-        aliases:
-          - uthreeml__cloudflared
+      - default
 
     deploy:
       resources:
@@ -156,19 +119,8 @@ networks:
     name: prometheus__cloudflared
     external: true
 
-  jupyternotebook_nginx:
-    name: uthreeml__jupyternotebook_nginx
-    internal: true
-
-  nginx_cloudflared:
-    name: uthreeml__nginx_cloudflared
-    internal: true
-
-  jupyternotebook_internet:
-    name: uthreeml__jupyternotebook_internet
-
-  cloudflared_internet:
-    name: uthreeml__cloudflared_internet
+  default:
+    name: uthreeml__default
 
   nginxcompat_cloudflaredcompat:
     name: uthreeml__nginxcompat_cloudflaredcompat
