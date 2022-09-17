@@ -4,10 +4,10 @@ on:
   pull_request:
     paths:
       - 'squid.conf'
-      - '.github/workflows/validate-squid.yml'
+      - '.github/workflows/validate-nginx.yml'
 
 jobs:
-  validate-squid:
+  validate-nginx:
     runs-on: ubuntu-20.04
 
     steps:
