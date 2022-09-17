@@ -2,6 +2,9 @@ name: validate compose
 
 on:
   pull_request:
+    paths:
+      - 'docker-compose.yml'
+      - '.github/workflows/validate-compose.yml'
 
 jobs:
   validate-compose:
