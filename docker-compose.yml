@@ -1,5 +1,26 @@
 version: '3.9'
 services:
+  squid:
+    image: datadog/squid@sha256:f7d19d5e3f4163771291d91de393ce667f2327a3e080c39b9b7ea9e19f91488f
+    hostname: squid
+    container_name: uthreeml__squid
+    restart: unless-stopped
+
+    volumes:
+      - type: bind
+        source: ./squid.conf
+        target: /etc/squid/squid.conf
+        read_only: true
+
+    networks:
+      - default
+      - outband
+
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
   jupyternotebook:
     image: ghcr.io/yanorei32/uthree-ml-image:0.5.3
     hostname: jupyternotebook
@@ -9,6 +30,8 @@ services:
 
     environment:
       SHELL: "/bin/zsh"
+      http_proxy: http://squid:3128
+      https_proxy: http://squid:3128
 
     volumes:
       - type: volume
@@ -62,6 +85,7 @@ services:
 
     networks:
       default:
+      outband:
       prometheus__cloudflared:
         aliases:
           - uthreeml__cloudflared
@@ -82,3 +106,7 @@ networks:
 
   default:
     name: uthreeml__default
+    internal: true
+
+  outband:
+    name: uthreeml__outband
