@@ -1,9 +1,9 @@
-name: validate squid
+name: validate nginx
 
 on:
   pull_request:
     paths:
-      - 'squid.conf'
+      - 'nginx.compat.conf'
       - '.github/workflows/validate-nginx.yml'
 
 jobs:
