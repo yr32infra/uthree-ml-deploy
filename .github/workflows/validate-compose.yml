@@ -1,0 +1,27 @@
+name: validate compose
+
+on:
+  pull_request:
+
+jobs:
+  validate-compose:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3.0.2
+
+      - uses: actions/setup-node@v3.4.1
+
+      - name: validate
+        shell: bash
+        run: |
+          shopt -s globstar
+          set -eux
+
+          for f in **/docker-compose.yml; do
+              if ! docker compose --file "$f" config --quiet; then
+                  exit 1
+              fi
+          done
+
+          exit 0
