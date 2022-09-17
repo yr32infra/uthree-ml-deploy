@@ -28,7 +28,7 @@ jobs:
           set -eux
 
           for f in **/nginx*.conf; do
-              if ! nginx -t -c "$(cd "$(dirname "$f")" && pwd)/$(basename "$f")"; then
+              if ! sudo nginx -t -c "$(cd "$(dirname "$f")" && pwd)/$(basename "$f")"; then
                   exit 1
               fi
           done
