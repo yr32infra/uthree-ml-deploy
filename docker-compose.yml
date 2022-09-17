@@ -71,7 +71,7 @@ services:
           memory: 128m
 
   cloudflared:
-    image: cloudflare/cloudflared:2022.8.4-amd64@sha256:52b8a267e4f262846e9eb24eb25e9a0cdd216d2ae489522c27bc25e01772f93e
+    image: cloudflare/cloudflared:2022.9.0-amd64@sha256:f0ed552236ffd915114025cbc5d803aa7ce65c192032a23045545310b1a73cc4
     hostname: cloudflared
     container_name: uthreeml__cloudflared
     restart: unless-stopped
