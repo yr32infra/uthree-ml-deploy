@@ -51,7 +51,7 @@ services:
               capabilities: [gpu]
 
   nginxcompat:
-    image: nginx:1.23.1
+    image: nginx:1.23.2
     hostname: nginxcompat
     container_name: uthreeml__nginxcompat
     restart: unless-stopped
