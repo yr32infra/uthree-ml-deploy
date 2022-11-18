@@ -50,26 +50,6 @@ services:
             - driver: nvidia
               capabilities: [gpu]
 
-  nginxcompat:
-    image: nginx:1.23.2
-    hostname: nginxcompat
-    container_name: uthreeml__nginxcompat
-    restart: unless-stopped
-
-    volumes:
-      - type: bind
-        source: ./nginx.compat.conf
-        target: /etc/nginx/nginx.conf
-        read_only: true
-
-    networks:
-      - default
-
-    deploy:
-      resources:
-        limits:
-          memory: 128m
-
   cloudflared:
     image: cloudflare/cloudflared:2022.10.3-amd64@sha256:d3840dadf665098fa7307aeec68f1ce8802437559cb06cf3863afcf963a02f6d
     hostname: cloudflared
