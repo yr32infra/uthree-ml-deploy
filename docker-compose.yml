@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   squid:
-    image: ubuntu/squid:5.2-22.04_beta@sha256:d4897d684bb150d5325af0e39f35087c0714509f914760e5db8a3679ef26222b
+    image: ubuntu/squid:5.2-22.04_beta@sha256:3ea4e8fefdf4a7f09537cde6de5ba64f04ca187461b1171257d8847df7ab75b7
     hostname: squid
     container_name: uthreeml__squid
     restart: unless-stopped
