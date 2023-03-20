@@ -22,7 +22,7 @@ services:
           memory: 256m
 
   jupyternotebook:
-    image: ghcr.io/yanorei32/uthree-ml-image:0.6.0
+    image: ghcr.io/yanorei32/uthree-ml-image:0.7.0
     hostname: jupyternotebook
     container_name: uthreeml__jupyternotebook
     restart: unless-stopped
